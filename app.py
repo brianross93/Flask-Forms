@@ -79,25 +79,35 @@ def message_results():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="GET">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    
+    calc_num1 = request.form.get("operand1")
+    calc_num2 = request.form.get("operand2")
+    calc_op = request.form.get("operation")
+    
+    number1 = int(calc_num1)
+    number2 = int(calc_num2)
+    operation = calc_op
+   
+    """Multiply numbers"""
+    if(operation == 'Addition'):
+        result = number1 + number2
+    elif(operation == 'Subtraction'):
+        result = number1 - number2
+    elif(operation == 'Multiplication'):
+        result = number1 * number2
+    elif(operation == 'Division'):
+        result = number1 / number2
+    else:
+        result = 'Something Went Wrong'
+    numresult = result
+    return render_template('result.html', result=numresult)
 
 @app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
-    pass
+    num1 = request.args.get("operand1")
+    num2 = request.args.get('operand2')
+    numresult = num1 
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
