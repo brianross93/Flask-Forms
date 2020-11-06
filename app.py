@@ -76,13 +76,18 @@ def message_results():
     sec_message_return = sorted(sec_message)
     return str(sec_message_return)
 
-@app.route('/calculator')
+@app.route('/calculator_form')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
+    return render_template("calculator_form.html")
     
-    calc_num1 = request.form.get("operand1")
-    calc_num2 = request.form.get("operand2")
-    calc_op = request.form.get("operation")
+
+@app.route('/calculator_results')
+def calculator_results():
+    """Shows the user the result of their calculation."""
+    calc_num1 = request.args.get("operand1")
+    calc_num2 = request.args.get("operand2")
+    calc_op = request.args.get("operation")
     
     number1 = int(calc_num1)
     number2 = int(calc_num2)
@@ -99,16 +104,8 @@ def calculator():
         result = number1 / number2
     else:
         result = 'Something Went Wrong'
-    numresult = result
-    return render_template('result.html', result=numresult)
 
-@app.route('/calculator_results')
-def calculator_results():
-    """Shows the user the result of their calculation."""
-    num1 = request.args.get("operand1")
-    num2 = request.args.get('operand2')
-    numresult = num1 
-
+    return render_template('calculator_results.html', result=result, operation=operation, number1=number1, number2=number2)
 
 # List of compliments to be used in the `compliments_results` route (feel free 
 # to add your own!) 
@@ -155,4 +152,4 @@ def compliments_results():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
