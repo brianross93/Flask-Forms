@@ -7,8 +7,19 @@
         <!-- Your HTML code goes here! -->
 
         
-
-        
-        
+Hello {{name}} you selected {{boolcomp}}
+{% if boolcomp == 'yes' %}
+<ul>  
+{% for i in compliments %}
+    
+<li>
+            {{i}}
+        </li>
+    
+{% endfor %}
+</ul>
+        {%  else %}
+        <p>No compliments for you</p>
+        {% endif %}
     </body>
 </html>
